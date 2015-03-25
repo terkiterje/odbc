@@ -7,7 +7,7 @@ all: zapi_windows.go zapi_unix.go
 TMP=/tmp/mksyscall_windows
 
 zapi_windows.go: api.go
-	go build -o $(TMP) $(GOROOT)/src/pkg/syscall/mksyscall_windows.go
+	go build -o $(TMP) $(GOROOT)/src/syscall/mksyscall_windows.go
 	GOOS=windows $(TMP) $^ | gofmt > $@
 	rm $(TMP)
 

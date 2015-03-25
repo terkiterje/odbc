@@ -116,6 +116,7 @@ type (
 	SQLHSTMT  SQLHANDLE
 	SQLHWND   uintptr
 
+	SQLCHAR      uint8
 	SQLWCHAR     uint16
 	SQLSCHAR     int8
 	SQLSMALLINT  int16
@@ -140,7 +141,7 @@ func SQLSetEnvUIntPtrAttr(environmentHandle SQLHENV, attribute SQLINTEGER, value
 }
 
 func SQLSetConnectUIntPtrAttr(connectionHandle SQLHDBC, attribute SQLINTEGER, valuePtr uintptr, stringLength SQLINTEGER) (ret SQLRETURN) {
-	r0, _, _ := syscall.Syscall6(procSQLSetConnectAttrW.Addr(), 4, uintptr(connectionHandle), uintptr(attribute), uintptr(valuePtr), uintptr(stringLength), 0, 0)
+	r0, _, _ := syscall.Syscall6(procSQLSetConnectAttrA.Addr(), 4, uintptr(connectionHandle), uintptr(attribute), uintptr(valuePtr), uintptr(stringLength), 0, 0)
 	ret = SQLRETURN(r0)
 	return
 }

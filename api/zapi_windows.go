@@ -9,26 +9,26 @@ import "syscall"
 var (
 	mododbc32 = syscall.NewLazyDLL("odbc32.dll")
 
-	procSQLAllocHandle     = mododbc32.NewProc("SQLAllocHandle")
-	procSQLBindCol         = mododbc32.NewProc("SQLBindCol")
-	procSQLBindParameter   = mododbc32.NewProc("SQLBindParameter")
-	procSQLCloseCursor     = mododbc32.NewProc("SQLCloseCursor")
-	procSQLDescribeColW    = mododbc32.NewProc("SQLDescribeColW")
-	procSQLDescribeParam   = mododbc32.NewProc("SQLDescribeParam")
-	procSQLDisconnect      = mododbc32.NewProc("SQLDisconnect")
-	procSQLDriverConnectW  = mododbc32.NewProc("SQLDriverConnectW")
-	procSQLEndTran         = mododbc32.NewProc("SQLEndTran")
-	procSQLExecute         = mododbc32.NewProc("SQLExecute")
-	procSQLFetch           = mododbc32.NewProc("SQLFetch")
-	procSQLFreeHandle      = mododbc32.NewProc("SQLFreeHandle")
-	procSQLGetData         = mododbc32.NewProc("SQLGetData")
-	procSQLGetDiagRecW     = mododbc32.NewProc("SQLGetDiagRecW")
-	procSQLNumParams       = mododbc32.NewProc("SQLNumParams")
-	procSQLNumResultCols   = mododbc32.NewProc("SQLNumResultCols")
-	procSQLPrepareW        = mododbc32.NewProc("SQLPrepareW")
-	procSQLRowCount        = mododbc32.NewProc("SQLRowCount")
-	procSQLSetEnvAttr      = mododbc32.NewProc("SQLSetEnvAttr")
-	procSQLSetConnectAttrW = mododbc32.NewProc("SQLSetConnectAttrW")
+	procSQLAllocHandle = mododbc32.NewProc("SQLAllocHandle")
+	procSQLBindCol = mododbc32.NewProc("SQLBindCol")
+	procSQLBindParameter = mododbc32.NewProc("SQLBindParameter")
+	procSQLCloseCursor = mododbc32.NewProc("SQLCloseCursor")
+	procSQLDescribeColA = mododbc32.NewProc("SQLDescribeColA")
+	procSQLDescribeParam = mododbc32.NewProc("SQLDescribeParam")
+	procSQLDisconnect = mododbc32.NewProc("SQLDisconnect")
+	procSQLDriverConnectA = mododbc32.NewProc("SQLDriverConnectA")
+	procSQLEndTran = mododbc32.NewProc("SQLEndTran")
+	procSQLExecute = mododbc32.NewProc("SQLExecute")
+	procSQLFetch = mododbc32.NewProc("SQLFetch")
+	procSQLFreeHandle = mododbc32.NewProc("SQLFreeHandle")
+	procSQLGetData = mododbc32.NewProc("SQLGetData")
+	procSQLGetDiagRecA = mododbc32.NewProc("SQLGetDiagRecA")
+	procSQLNumParams = mododbc32.NewProc("SQLNumParams")
+	procSQLNumResultCols = mododbc32.NewProc("SQLNumResultCols")
+	procSQLPrepareA = mododbc32.NewProc("SQLPrepareA")
+	procSQLRowCount = mododbc32.NewProc("SQLRowCount")
+	procSQLSetEnvAttr = mododbc32.NewProc("SQLSetEnvAttr")
+	procSQLSetConnectAttrA = mododbc32.NewProc("SQLSetConnectAttrA")
 )
 
 func SQLAllocHandle(handleType SQLSMALLINT, inputHandle SQLHANDLE, outputHandle *SQLHANDLE) (ret SQLRETURN) {
@@ -55,8 +55,8 @@ func SQLCloseCursor(statementHandle SQLHSTMT) (ret SQLRETURN) {
 	return
 }
 
-func SQLDescribeCol(statementHandle SQLHSTMT, columnNumber SQLUSMALLINT, columnName *SQLWCHAR, bufferLength SQLSMALLINT, nameLengthPtr *SQLSMALLINT, dataTypePtr *SQLSMALLINT, columnSizePtr *SQLULEN, decimalDigitsPtr *SQLSMALLINT, nullablePtr *SQLSMALLINT) (ret SQLRETURN) {
-	r0, _, _ := syscall.Syscall9(procSQLDescribeColW.Addr(), 9, uintptr(statementHandle), uintptr(columnNumber), uintptr(unsafe.Pointer(columnName)), uintptr(bufferLength), uintptr(unsafe.Pointer(nameLengthPtr)), uintptr(unsafe.Pointer(dataTypePtr)), uintptr(unsafe.Pointer(columnSizePtr)), uintptr(unsafe.Pointer(decimalDigitsPtr)), uintptr(unsafe.Pointer(nullablePtr)))
+func SQLDescribeCol(statementHandle SQLHSTMT, columnNumber SQLUSMALLINT, columnName *SQLCHAR, bufferLength SQLSMALLINT, nameLengthPtr *SQLSMALLINT, dataTypePtr *SQLSMALLINT, columnSizePtr *SQLULEN, decimalDigitsPtr *SQLSMALLINT, nullablePtr *SQLSMALLINT) (ret SQLRETURN) {
+	r0, _, _ := syscall.Syscall9(procSQLDescribeColA.Addr(), 9, uintptr(statementHandle), uintptr(columnNumber), uintptr(unsafe.Pointer(columnName)), uintptr(bufferLength), uintptr(unsafe.Pointer(nameLengthPtr)), uintptr(unsafe.Pointer(dataTypePtr)), uintptr(unsafe.Pointer(columnSizePtr)), uintptr(unsafe.Pointer(decimalDigitsPtr)), uintptr(unsafe.Pointer(nullablePtr)))
 	ret = SQLRETURN(r0)
 	return
 }
@@ -73,8 +73,8 @@ func SQLDisconnect(connectionHandle SQLHDBC) (ret SQLRETURN) {
 	return
 }
 
-func SQLDriverConnect(connectionHandle SQLHDBC, windowHandle SQLHWND, inConnectionString *SQLWCHAR, stringLength1 SQLSMALLINT, outConnectionString *SQLWCHAR, bufferLength SQLSMALLINT, stringLength2Ptr *SQLSMALLINT, driverCompletion SQLUSMALLINT) (ret SQLRETURN) {
-	r0, _, _ := syscall.Syscall9(procSQLDriverConnectW.Addr(), 8, uintptr(connectionHandle), uintptr(windowHandle), uintptr(unsafe.Pointer(inConnectionString)), uintptr(stringLength1), uintptr(unsafe.Pointer(outConnectionString)), uintptr(bufferLength), uintptr(unsafe.Pointer(stringLength2Ptr)), uintptr(driverCompletion), 0)
+func SQLDriverConnect(connectionHandle SQLHDBC, windowHandle SQLHWND, inConnectionString *SQLCHAR, stringLength1 SQLSMALLINT, outConnectionString *SQLCHAR, bufferLength SQLSMALLINT, stringLength2Ptr *SQLSMALLINT, driverCompletion SQLUSMALLINT) (ret SQLRETURN) {
+	r0, _, _ := syscall.Syscall9(procSQLDriverConnectA.Addr(), 8, uintptr(connectionHandle), uintptr(windowHandle), uintptr(unsafe.Pointer(inConnectionString)), uintptr(stringLength1), uintptr(unsafe.Pointer(outConnectionString)), uintptr(bufferLength), uintptr(unsafe.Pointer(stringLength2Ptr)), uintptr(driverCompletion), 0)
 	ret = SQLRETURN(r0)
 	return
 }
@@ -109,8 +109,8 @@ func SQLGetData(statementHandle SQLHSTMT, colOrParamNum SQLUSMALLINT, targetType
 	return
 }
 
-func SQLGetDiagRec(handleType SQLSMALLINT, handle SQLHANDLE, recNumber SQLSMALLINT, sqlState *SQLWCHAR, nativeErrorPtr *SQLINTEGER, messageText *SQLWCHAR, bufferLength SQLSMALLINT, textLengthPtr *SQLSMALLINT) (ret SQLRETURN) {
-	r0, _, _ := syscall.Syscall9(procSQLGetDiagRecW.Addr(), 8, uintptr(handleType), uintptr(handle), uintptr(recNumber), uintptr(unsafe.Pointer(sqlState)), uintptr(unsafe.Pointer(nativeErrorPtr)), uintptr(unsafe.Pointer(messageText)), uintptr(bufferLength), uintptr(unsafe.Pointer(textLengthPtr)), 0)
+func SQLGetDiagRec(handleType SQLSMALLINT, handle SQLHANDLE, recNumber SQLSMALLINT, sqlState *SQLCHAR, nativeErrorPtr *SQLINTEGER, messageText *SQLCHAR, bufferLength SQLSMALLINT, textLengthPtr *SQLSMALLINT) (ret SQLRETURN) {
+	r0, _, _ := syscall.Syscall9(procSQLGetDiagRecA.Addr(), 8, uintptr(handleType), uintptr(handle), uintptr(recNumber), uintptr(unsafe.Pointer(sqlState)), uintptr(unsafe.Pointer(nativeErrorPtr)), uintptr(unsafe.Pointer(messageText)), uintptr(bufferLength), uintptr(unsafe.Pointer(textLengthPtr)), 0)
 	ret = SQLRETURN(r0)
 	return
 }
@@ -127,8 +127,8 @@ func SQLNumResultCols(statementHandle SQLHSTMT, columnCountPtr *SQLSMALLINT) (re
 	return
 }
 
-func SQLPrepare(statementHandle SQLHSTMT, statementText *SQLWCHAR, textLength SQLINTEGER) (ret SQLRETURN) {
-	r0, _, _ := syscall.Syscall(procSQLPrepareW.Addr(), 3, uintptr(statementHandle), uintptr(unsafe.Pointer(statementText)), uintptr(textLength))
+func SQLPrepare(statementHandle SQLHSTMT, statementText *SQLCHAR, textLength SQLINTEGER) (ret SQLRETURN) {
+	r0, _, _ := syscall.Syscall(procSQLPrepareA.Addr(), 3, uintptr(statementHandle), uintptr(unsafe.Pointer(statementText)), uintptr(textLength))
 	ret = SQLRETURN(r0)
 	return
 }
@@ -146,7 +146,8 @@ func SQLSetEnvAttr(environmentHandle SQLHENV, attribute SQLINTEGER, valuePtr SQL
 }
 
 func SQLSetConnectAttr(connectionHandle SQLHDBC, attribute SQLINTEGER, valuePtr SQLPOINTER, stringLength SQLINTEGER) (ret SQLRETURN) {
-	r0, _, _ := syscall.Syscall6(procSQLSetConnectAttrW.Addr(), 4, uintptr(connectionHandle), uintptr(attribute), uintptr(valuePtr), uintptr(stringLength), 0, 0)
+	r0, _, _ := syscall.Syscall6(procSQLSetConnectAttrA.Addr(), 4, uintptr(connectionHandle), uintptr(attribute), uintptr(valuePtr), uintptr(stringLength), 0, 0)
 	ret = SQLRETURN(r0)
 	return
 }
+
