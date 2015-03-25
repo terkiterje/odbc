@@ -8,6 +8,7 @@ import (
 	"database/sql/driver"
 	"github.com/terkiterje/odbc/api"
 	"unsafe"
+	"fmt"
 )
 
 type Conn struct {
@@ -30,7 +31,7 @@ func (d *Driver) Open(dsn string) (driver.Conn, error) {
 		nil, 0, nil, api.SQL_DRIVER_NOPROMPT)
 	if IsError(ret) {
 		defer releaseHandle(h)
-		return nil, NewError("SQLDriverConnect", h)
+		return nil, NewError(fmt.Sprintf("SQLDriverConnect returned %d",ret), h)
 	}
 	return &Conn{h: h}, nil
 }

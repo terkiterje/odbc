@@ -39,18 +39,23 @@ func initDriver() error {
 
 	//TODO: find a way to make this attribute changeable at runtime
 	//Enable connection pooling
+
+	//XXX: Teradata does not seem to support connection pooling on unix
+	//XXX: disabled for now
+	/*
 	ret = api.SQLSetEnvUIntPtrAttr(drv.h, api.SQL_ATTR_CONNECTION_POOLING, api.SQL_CP_ONE_PER_HENV, api.SQL_IS_UINTEGER)
 	if IsError(ret) {
 		defer releaseHandle(drv.h)
-		return NewError("SQLSetEnvUIntPtrAttr", drv.h)
+		return NewError("SQLSetEnvUIntPtrAttr connection pooling", drv.h)
 	}
 
 	//Set relaxed connection pool matching
 	ret = api.SQLSetEnvUIntPtrAttr(drv.h, api.SQL_ATTR_CP_MATCH, api.SQL_CP_RELAXED_MATCH, api.SQL_IS_UINTEGER)
 	if IsError(ret) {
 		defer releaseHandle(drv.h)
-		return NewError("SQLSetEnvUIntPtrAttr", drv.h)
+		return NewError("SQLSetEnvUIntPtrAttr cp matching", drv.h)
 	}
+	*/
 
 	//TODO: it would be nice if we could call "drv.SetMaxIdleConns(0)" here but from the docs it looks like
 	//the user must call this function after db.Open
