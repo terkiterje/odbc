@@ -40,7 +40,7 @@ func SQLCloseCursor(statementHandle SQLHSTMT) (ret SQLRETURN) {
 }
 
 func SQLDescribeCol(statementHandle SQLHSTMT, columnNumber SQLUSMALLINT, columnName *SQLCHAR, bufferLength SQLSMALLINT, nameLengthPtr *SQLSMALLINT, dataTypePtr *SQLSMALLINT, columnSizePtr *SQLULEN, decimalDigitsPtr *SQLSMALLINT, nullablePtr *SQLSMALLINT) (ret SQLRETURN) {
-	r := C.SQLDescribeColA(C.SQLHSTMT(statementHandle), C.SQLUSMALLINT(columnNumber), (*C.SQLCHAR)(unsafe.Pointer(columnName)), C.SQLSMALLINT(bufferLength), (*C.SQLSMALLINT)(nameLengthPtr), (*C.SQLSMALLINT)(dataTypePtr), (*C.SQLULEN)(columnSizePtr), (*C.SQLSMALLINT)(decimalDigitsPtr), (*C.SQLSMALLINT)(nullablePtr))
+	r := C.SQLDescribeCol(C.SQLHSTMT(statementHandle), C.SQLUSMALLINT(columnNumber), (*C.SQLCHAR)(unsafe.Pointer(columnName)), C.SQLSMALLINT(bufferLength), (*C.SQLSMALLINT)(nameLengthPtr), (*C.SQLSMALLINT)(dataTypePtr), (*C.SQLULEN)(columnSizePtr), (*C.SQLSMALLINT)(decimalDigitsPtr), (*C.SQLSMALLINT)(nullablePtr))
 	return SQLRETURN(r)
 }
 
@@ -55,7 +55,7 @@ func SQLDisconnect(connectionHandle SQLHDBC) (ret SQLRETURN) {
 }
 
 func SQLDriverConnect(connectionHandle SQLHDBC, windowHandle SQLHWND, inConnectionString *SQLCHAR, stringLength1 SQLSMALLINT, outConnectionString *SQLCHAR, bufferLength SQLSMALLINT, stringLength2Ptr *SQLSMALLINT, driverCompletion SQLUSMALLINT) (ret SQLRETURN) {
-	r := C.SQLDriverConnectA(C.SQLHDBC(connectionHandle), C.SQLHWND(windowHandle), (*C.SQLCHAR)(unsafe.Pointer(inConnectionString)), C.SQLSMALLINT(stringLength1), (*C.SQLCHAR)(unsafe.Pointer(outConnectionString)), C.SQLSMALLINT(bufferLength), (*C.SQLSMALLINT)(stringLength2Ptr), C.SQLUSMALLINT(driverCompletion))
+	r := C.SQLDriverConnect(C.SQLHDBC(connectionHandle), C.SQLHWND(windowHandle), (*C.SQLCHAR)(unsafe.Pointer(inConnectionString)), C.SQLSMALLINT(stringLength1), (*C.SQLCHAR)(unsafe.Pointer(outConnectionString)), C.SQLSMALLINT(bufferLength), (*C.SQLSMALLINT)(stringLength2Ptr), C.SQLUSMALLINT(driverCompletion))
 	return SQLRETURN(r)
 }
 
@@ -85,7 +85,7 @@ func SQLGetData(statementHandle SQLHSTMT, colOrParamNum SQLUSMALLINT, targetType
 }
 
 func SQLGetDiagRec(handleType SQLSMALLINT, handle SQLHANDLE, recNumber SQLSMALLINT, sqlState *SQLCHAR, nativeErrorPtr *SQLINTEGER, messageText *SQLCHAR, bufferLength SQLSMALLINT, textLengthPtr *SQLSMALLINT) (ret SQLRETURN) {
-	r := C.SQLGetDiagRecA(C.SQLSMALLINT(handleType), C.SQLHANDLE(handle), C.SQLSMALLINT(recNumber), (*C.SQLCHAR)(unsafe.Pointer(sqlState)), (*C.SQLINTEGER)(nativeErrorPtr), (*C.SQLCHAR)(unsafe.Pointer(messageText)), C.SQLSMALLINT(bufferLength), (*C.SQLSMALLINT)(textLengthPtr))
+	r := C.SQLGetDiagRec(C.SQLSMALLINT(handleType), C.SQLHANDLE(handle), C.SQLSMALLINT(recNumber), (*C.SQLCHAR)(unsafe.Pointer(sqlState)), (*C.SQLINTEGER)(nativeErrorPtr), (*C.SQLCHAR)(unsafe.Pointer(messageText)), C.SQLSMALLINT(bufferLength), (*C.SQLSMALLINT)(textLengthPtr))
 	return SQLRETURN(r)
 }
 
