@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	"code.google.com/p/odbc/api"
+	"github.com/terkiterje/odbc/api"
 )
 
 var (

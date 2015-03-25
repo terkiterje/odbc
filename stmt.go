@@ -5,9 +5,9 @@
 package odbc
 
 import (
-	"code.google.com/p/odbc/api"
 	"database/sql/driver"
 	"errors"
+	"github.com/terkiterje/odbc/api"
 	"sync"
 )
 
